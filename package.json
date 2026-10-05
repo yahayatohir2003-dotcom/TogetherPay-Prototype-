@@ -1,0 +1,14 @@
+{
+  "name": "togetherpay-prototype",
+  "version": "1.0.0",
+  "private": true,
+  "description": "TogetherPay: UI/UX prototype of a secure approval layer for bank joint accounts. Simulated bank, sample data only.",
+  "dependencies": {
+    "@capacitor/android": "^8.5.2",
+    "@capacitor/app": "^8.1.2",
+    "@capacitor/core": "^8.5.2"
+  },
+  "devDependencies": {
+    "@capacitor/cli": "^8.5.2"
+  }
+}

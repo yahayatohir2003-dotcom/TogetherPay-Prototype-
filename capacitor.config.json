@@ -1,0 +1,7 @@
+{
+  "appId": "com.togetherpay.prototype",
+  "appName": "TogetherPay",
+  "webDir": "www",
+  "backgroundColor": "#0B2A6F",
+  "android": { "allowMixedContent": false }
+}
