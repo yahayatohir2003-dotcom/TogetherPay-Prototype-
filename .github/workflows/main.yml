@@ -27,16 +27,24 @@ jobs:
         run: npm install --no-audit --no-fund
 
       - name: Copy the app files into www
-        run: | mkdir -p www cp index.html styles.css data.js state.js screens.js app.js www/ 
+        run: mkdir -p www && cp index.html styles.css data.js state.js screens.js app.js www/
+
       - name: Create the Android project
-        run: | [ -d android ] || npx cap add android npx cap sync android 
+        run: if [ ! -d android ]; then npx cap add android; fi && npx cap sync android
+
       - name: Create app icons (optional)
-        run: | pip install pillow > /dev/null 2>&1 && python3 make_icons.py || echo "Icons skipped, default icon will be used" 
-      - name: Accept Android licences and install SDK 36
-        run: | yes | "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" --licenses > /dev/null || true "$ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager" "platforms;android-36" "build-tools;36.0.0" > /dev/null || true 
+        run: pip install pillow > /dev/null 2>&1 && python3 make_icons.py || echo "Icons skipped"
+
+      - name: Accept Android licences
+        run: yes | $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager --licenses > /dev/null || true
+
+      - name: Install Android SDK 36
+        run: $ANDROID_HOME/cmdline-tools/latest/bin/sdkmanager "platforms;android-36" "build-tools;36.0.0" > /dev/null || true
+
       - name: Build the APK
         working-directory: android
-        run: | chmod +x gradlew ./gradlew assembleDebug --no-daemon 
+        run: chmod +x gradlew && ./gradlew assembleDebug --no-daemon
+
       - name: Save the APK
         uses: actions/upload-artifact@v4
         with:
